@@ -1,8 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:walletoo_app/data/repositories/wallet_repository.dart';
+import 'package:walletoo_app/provider/spending_provider.dart';
+import 'package:walletoo_app/provider/wallet_provider.dart';
 import 'package:walletoo_app/view/screens/startup_screen.dart';
+import 'di_container.dart' as di;
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  await di.init();
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => di.sl<WalletProvider>(),
+        ),
+        ChangeNotifierProvider(create: (context) => di.sl<SpendingProvider>())
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
