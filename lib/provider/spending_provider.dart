@@ -41,4 +41,31 @@ class SpendingProvider extends ChangeNotifier {
   void addSpending(SpendingModel spending) {
     _spendings.add(spending);
   }
+
+  void removeSpending(SpendingModel spending) {
+    _spendings.remove(spending);
+  }
+
+  void updateSpending(SpendingModel spending) {
+    _spendings[_spendings.indexWhere((element) => element.id == spending.id)] =
+        spending;
+  }
+
+  void clearSpendings() {
+    _spendings.clear();
+  }
+
+  Future<void> fetchSpendingsByDate(DateTime date) async {
+    _spendings = spendingByDate(date);
+    notifyListeners();
+  }
+
+  List<SpendingModel> spendingByDate(DateTime date) {
+    return _spendings
+        .where((element) =>
+            element.date.year == date.year &&
+            element.date.month == date.month &&
+            element.date.day == date.day)
+        .toList();
+  }
 }
