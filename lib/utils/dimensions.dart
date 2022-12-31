@@ -5,7 +5,7 @@ class Dimensions {
   static const double FONT_SIZE_SMALL = 16.0;
   static const double FONT_SIZE_DEFAULT = 18.0;
   static const double FONT_SIZE_LARGE = 20.0;
-  static const double FONT_SIZE_EXTRA_LARGE = 26.0;
+  static const double FONT_SIZE_EXTRA_LARGE = 24.0;
   static const double FONT_SIZE_OVER_LARGE = 28.0;
 
   static const double PADDING_SIZE_EXTRA_SMALL = 5.0;

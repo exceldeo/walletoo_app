@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:walletoo_app/data/models/spending.dart';
 import 'package:walletoo_app/provider/spending_provider.dart';
 import 'package:walletoo_app/utils/color_resources.dart';
 import 'package:walletoo_app/utils/dimensions.dart';
+import 'package:walletoo_app/utils/router_name.dart';
 import 'package:walletoo_app/utils/string_resourses.dart';
+import 'package:walletoo_app/view/screens/spending/history_screen.dart';
 import 'package:walletoo_app/view/widgets/button.dart';
 import 'package:walletoo_app/view/widgets/spendingPage/card_spending.dart';
 
@@ -121,7 +124,12 @@ class _SpendingScreenState extends State<SpendingScreen> {
               ButtonText: Strings.spendingHistory,
               Size: 'md',
               onPressed: () {
-                print("tset");
+                PersistentNavBarNavigator.pushNewScreen(
+                  context,
+                  screen: SpendingHistoryScreen(),
+                  withNavBar: false,
+                  pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                );
               },
             ),
           ],
