@@ -6,6 +6,7 @@ import 'package:walletoo_app/view/screens/spending_screen.dart';
 import 'package:walletoo_app/view/screens/wallet_screen.dart';
 
 class StartUpScreen extends StatefulWidget {
+  static const routeName = "/startUpScreen";
   StartUpScreen({Key? key}) : super(key: key);
 
   @override
