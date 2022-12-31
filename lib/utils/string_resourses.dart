@@ -28,6 +28,7 @@ class Strings {
   static const String spendingTotal = "Total Spending";
   static const String spendingListByCategory = "List Spending By Category";
   static const String spendingListByWallet = "List Spending By Wallet";
+  static const String spendingList = "List Spending";
 
   static const String categoryName = "Category Name";
   static const String categoryNameHint = "Enter Category Name";

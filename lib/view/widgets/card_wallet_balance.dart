@@ -3,6 +3,7 @@ import 'package:walletoo_app/data/models/wallet.dart';
 import 'package:walletoo_app/utils/color_resources.dart';
 import 'package:walletoo_app/utils/currency_format.dart';
 import 'package:walletoo_app/utils/dimensions.dart';
+import 'package:walletoo_app/utils/string_resourses.dart';
 
 class CardWalletBalance extends StatelessWidget {
   final double balance;
@@ -36,7 +37,7 @@ class CardWalletBalance extends StatelessWidget {
           Container(
             width: double.infinity,
             child: Text(
-              "Balance",
+              Strings.walletBalance,
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: Dimensions.FONT_SIZE_DEFAULT,
@@ -62,7 +63,7 @@ class CardWalletBalance extends StatelessWidget {
           Container(
             width: double.infinity,
             child: Text(
-              "List Wallet",
+              Strings.walletList,
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: Dimensions.FONT_SIZE_DEFAULT,

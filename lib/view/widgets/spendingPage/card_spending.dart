@@ -4,6 +4,7 @@ import 'package:walletoo_app/data/models/wallet.dart';
 import 'package:walletoo_app/utils/color_resources.dart';
 import 'package:walletoo_app/utils/currency_format.dart';
 import 'package:walletoo_app/utils/dimensions.dart';
+import 'package:walletoo_app/utils/string_resourses.dart';
 
 class CardSpendingDaily extends StatelessWidget {
   List<SpendingModel> spendings = [];
@@ -35,7 +36,7 @@ class CardSpendingDaily extends StatelessWidget {
           Container(
             width: double.infinity,
             child: Text(
-              "List Spending",
+              Strings.spendingList,
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: Dimensions.FONT_SIZE_DEFAULT,

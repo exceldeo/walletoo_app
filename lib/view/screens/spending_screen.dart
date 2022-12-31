@@ -5,6 +5,7 @@ import 'package:walletoo_app/data/models/spending.dart';
 import 'package:walletoo_app/provider/spending_provider.dart';
 import 'package:walletoo_app/utils/color_resources.dart';
 import 'package:walletoo_app/utils/dimensions.dart';
+import 'package:walletoo_app/utils/string_resourses.dart';
 import 'package:walletoo_app/view/widgets/button.dart';
 import 'package:walletoo_app/view/widgets/spendingPage/card_spending.dart';
 
@@ -44,7 +45,7 @@ class _SpendingScreenState extends State<SpendingScreen> {
               children: [
                 Expanded(
                   flex: 4,
-                  child: Text("Spending",
+                  child: Text(Strings.spending,
                       style: TextStyle(
                         fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
                         fontWeight: FontWeight.w300,
@@ -106,7 +107,7 @@ class _SpendingScreenState extends State<SpendingScreen> {
             ),
             Button(
               ButtonType: 'primary',
-              ButtonText: 'Add Spending',
+              ButtonText: Strings.spendingAdd,
               Size: 'md',
               onPressed: () {
                 print("tset");
@@ -117,7 +118,7 @@ class _SpendingScreenState extends State<SpendingScreen> {
             ),
             Button(
               ButtonType: 'secondary',
-              ButtonText: 'See All Spending',
+              ButtonText: Strings.spendingHistory,
               Size: 'md',
               onPressed: () {
                 print("tset");

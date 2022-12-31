@@ -6,6 +6,7 @@ import 'package:walletoo_app/provider/category_provider.dart';
 import 'package:walletoo_app/provider/wallet_provider.dart';
 import 'package:walletoo_app/utils/color_resources.dart';
 import 'package:walletoo_app/utils/dimensions.dart';
+import 'package:walletoo_app/utils/string_resourses.dart';
 import 'package:walletoo_app/view/widgets/button.dart';
 import 'package:walletoo_app/view/widgets/card_category.dart';
 import 'package:walletoo_app/view/widgets/card_wallet_balance.dart';
@@ -52,7 +53,7 @@ class _WalletScreenState extends State<WalletScreen> {
                     children: [
                       Container(
                         width: double.infinity,
-                        child: Text("Wallet",
+                        child: Text(Strings.wallet,
                             style: TextStyle(
                               fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
                               fontWeight: FontWeight.w300,
@@ -72,16 +73,16 @@ class _WalletScreenState extends State<WalletScreen> {
                         height: 20,
                       ),
                       Button(
-                          ButtonType: 'primary',
-                          ButtonText: 'Top Up',
+                          ButtonType: 'secondary',
+                          ButtonText: Strings.walletAdd,
                           Size: 'md',
                           onPressed: () {}),
                       SizedBox(
                         height: 10,
                       ),
                       Button(
-                          ButtonType: 'secondary',
-                          ButtonText: 'Add Wallet',
+                          ButtonType: 'primary',
+                          ButtonText: Strings.topUp,
                           Size: 'md',
                           onPressed: () {}),
                       SizedBox(
@@ -89,7 +90,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       ),
                       Container(
                         width: double.infinity,
-                        child: Text("Categories Spending",
+                        child: Text(Strings.categoriesSpending,
                             style: TextStyle(
                               fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
                               fontWeight: FontWeight.w300,
@@ -106,7 +107,7 @@ class _WalletScreenState extends State<WalletScreen> {
                         height: 20,
                       ),
                       Button(
-                          ButtonText: 'Add Category',
+                          ButtonText: Strings.categoryAdd,
                           ButtonType: 'primary',
                           Size: 'md',
                           onPressed: () {}),

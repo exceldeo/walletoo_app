@@ -5,6 +5,7 @@ import 'package:walletoo_app/provider/spending_provider.dart';
 import 'package:walletoo_app/provider/wallet_provider.dart';
 import 'package:walletoo_app/utils/color_resources.dart';
 import 'package:walletoo_app/utils/dimensions.dart';
+import 'package:walletoo_app/utils/string_resourses.dart';
 import 'package:walletoo_app/view/widgets/card_spending.dart';
 import 'package:walletoo_app/view/widgets/card_wallet_balance.dart';
 
@@ -50,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Container(
                     width: double.infinity,
-                    child: Text("Wallet",
+                    child: Text(Strings.wallet,
                         style: TextStyle(
                           fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
                           fontWeight: FontWeight.w300,
@@ -72,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Spending",
+                      Text(Strings.spending,
                           style: TextStyle(
                             fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
                             fontWeight: FontWeight.w300,
