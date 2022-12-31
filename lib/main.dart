@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:walletoo_app/data/repositories/wallet_repository.dart';
+import 'package:walletoo_app/provider/category_provider.dart';
 import 'package:walletoo_app/provider/spending_provider.dart';
 import 'package:walletoo_app/provider/wallet_provider.dart';
 import 'package:walletoo_app/view/screens/startup_screen.dart';
@@ -14,7 +15,8 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => di.sl<WalletProvider>(),
         ),
-        ChangeNotifierProvider(create: (context) => di.sl<SpendingProvider>())
+        ChangeNotifierProvider(create: (context) => di.sl<SpendingProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<CategoryProvider>()),
       ],
       child: MyApp(),
     ),

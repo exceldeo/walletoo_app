@@ -35,14 +35,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorResources.COLOR_HOME_BACKGROUND,
-      body: RefreshIndicator(
-        onRefresh: () async {
-          await _fetchWallets();
-          await _fetchSpendings();
-        },
-        child: SingleChildScrollView(
+    return RefreshIndicator(
+      onRefresh: () async {
+        await _fetchWallets();
+        await _fetchSpendings();
+      },
+      child: Scaffold(
+        backgroundColor: ColorResources.COLOR_HOME_BACKGROUND,
+        body: SingleChildScrollView(
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -126,11 +126,9 @@ class _HomeScreenState extends State<HomeScreen> {
     _spendings = [];
     spendingProvider = Provider.of<SpendingProvider>(context, listen: false);
     await spendingProvider.fetchSpendings();
-    print(_spendings);
     setState(() {
       balanceSpending = spendingProvider.balance;
       _spendings = spendingProvider.spendingByCategory;
-      _spendings.map((e) => print(e)).toList();
     });
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:walletoo_app/data/models/category_spending.dart';
 import 'package:walletoo_app/data/models/spending.dart';
 import 'package:walletoo_app/data/repositories/spending_repository.dart';
 
