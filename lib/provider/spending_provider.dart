@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:walletoo_app/data/models/category_spending.dart';
 import 'package:walletoo_app/data/models/spending.dart';
 import 'package:walletoo_app/data/repositories/spending_repository.dart';
 
@@ -10,16 +9,19 @@ class SpendingProvider extends ChangeNotifier {
   List<SpendingModel> _spendings = [];
   List<SpendingModel> get spendings => _spendings;
 
+  List<List<SpendingModel>> _spendingsByDateRange = [];
+  List<List<SpendingModel>> get spendingsByDateRange => _spendingsByDateRange;
+
+  List<SpendingModel> _spendingsByDate = [];
+  List<SpendingModel> get spendingsByDate => _spendingsByDate;
+
   double get balance =>
       _spendings.fold(0, (sum, spending) => sum + spending.balance);
 
   List<Map<String, dynamic>> get spendingByCategory =>
       _spendings.fold(<Map<String, dynamic>>[],
           (List<Map<String, dynamic>> list, SpendingModel spending) {
-        if (list.any((element) => element['id'] == spending.category.id) &&
-            list.firstWhere(
-                    (element) => element['id'] == spending.category.id) !=
-                null) {
+        if (list.any((element) => element['id'] == spending.category.id)) {
           list.firstWhere((element) => element['id'] == spending.category.id)[
               'balance'] = (list.firstWhere((element) =>
                   element['id'] == spending.category.id)['balance']! +
@@ -57,7 +59,7 @@ class SpendingProvider extends ChangeNotifier {
   }
 
   Future<void> fetchSpendingsByDate(DateTime date) async {
-    _spendings = spendingByDate(date);
+    _spendingsByDate = spendingByDate(date);
     notifyListeners();
   }
 
@@ -68,5 +70,20 @@ class SpendingProvider extends ChangeNotifier {
             element.date.month == date.month &&
             element.date.day == date.day)
         .toList();
+  }
+
+  Future<void> fetchSpendingsByDateRange(DateTimeRange dateRange) async {
+    _spendingsByDateRange = spendingByDateRange(dateRange);
+    notifyListeners();
+  }
+
+  List<List<SpendingModel>> spendingByDateRange(DateTimeRange dateRange) {
+    List<List<SpendingModel>> spendingsByDateRange = [];
+    for (int i = dateRange.duration.inDays; i >= 0; i--) {
+      List<SpendingModel> spendings =
+          spendingByDate(dateRange.start.add(Duration(days: i)));
+      if (spendings.isNotEmpty) spendingsByDateRange.add(spendings);
+    }
+    return spendingsByDateRange;
   }
 }

@@ -4,6 +4,7 @@ import 'package:walletoo_app/utils/color_resources.dart';
 import 'package:walletoo_app/utils/currency_format.dart';
 import 'package:walletoo_app/utils/dimensions.dart';
 import 'package:walletoo_app/utils/string_resourses.dart';
+import 'package:walletoo_app/utils/text_style.dart';
 
 class CardSpending extends StatelessWidget {
   final double balance;
@@ -40,10 +41,7 @@ class CardSpending extends StatelessWidget {
               children: [
                 Text(
                   "From",
-                  style: TextStyle(
-                    fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                    color: ColorResources.COLOR_GREY,
-                  ),
+                  style: CustomTypography.jakartaSans(),
                 ),
                 Spacer(),
                 Text("27 Jan 2021",
@@ -64,10 +62,7 @@ class CardSpending extends StatelessWidget {
               children: [
                 Text(
                   "To",
-                  style: TextStyle(
-                    fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                    color: ColorResources.COLOR_GREY,
-                  ),
+                  style: CustomTypography.jakartaSans(),
                 ),
                 Spacer(),
                 Text("27 Jan 2021",
@@ -87,10 +82,7 @@ class CardSpending extends StatelessWidget {
             child: Text(
               Strings.spendingTotal,
               textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                color: ColorResources.COLOR_GREY,
-              ),
+              style: CustomTypography.jakartaSans(),
             ),
           ),
           Container(
@@ -110,10 +102,7 @@ class CardSpending extends StatelessWidget {
             child: Text(
               Strings.spendingListByCategory,
               textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                color: ColorResources.COLOR_GREY,
-              ),
+              style: CustomTypography.jakartaSans(),
             ),
           ),
           SizedBox(

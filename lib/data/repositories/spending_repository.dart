@@ -21,6 +21,24 @@ class SpendingRepo {
         balance: 3000,
         category: CategorySpendingModel(id: 3, name: "category 3"),
         date: DateTime.now()),
+    SpendingModel(
+        id: 4,
+        name: "spending 4",
+        balance: 3000,
+        category: CategorySpendingModel(id: 3, name: "category 3"),
+        date: DateTime.now().add(Duration(days: 1))),
+    SpendingModel(
+        id: 5,
+        name: "spending 5",
+        balance: 3000,
+        category: CategorySpendingModel(id: 3, name: "category 3"),
+        date: DateTime.now().add(Duration(days: 1))),
+    SpendingModel(
+        id: 6,
+        name: "spending 6",
+        balance: 3000,
+        category: CategorySpendingModel(id: 3, name: "category 3"),
+        date: DateTime.now().add(Duration(days: 2))),
   ];
 
   List<SpendingModel> get spendings => _spendings;

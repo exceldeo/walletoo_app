@@ -39,4 +39,5 @@ class Strings {
   static const String categoryList = "List Category";
 
   static const String topUp = "Top Up";
+  static const String total = "Total";
 }

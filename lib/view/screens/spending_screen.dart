@@ -37,104 +37,114 @@ class _SpendingScreenState extends State<SpendingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return RefreshIndicator(
+      onRefresh: () async {
+        await _fetchSpendings();
+        await _fetchSpendingsByDate(date);
+      },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: SafeArea(
+              child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
               children: [
-                Expanded(
-                  flex: 4,
-                  child: Text(Strings.spending,
-                      style: TextStyle(
-                        fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
-                        fontWeight: FontWeight.w300,
-                        color: ColorResources.COLOR_PRIMARY,
-                      )),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      DateFormat('dd-MM-yyyy').format(date),
-                      style: TextStyle(
-                        fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                        fontWeight: FontWeight.w300,
-                        color: ColorResources.COLOR_PRIMARY,
-                      ),
-                      textAlign: TextAlign.right,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      flex: 4,
+                      child: Text(Strings.spending,
+                          style: TextStyle(
+                            fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
+                            fontWeight: FontWeight.w300,
+                            color: ColorResources.COLOR_PRIMARY,
+                          )),
                     ),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(50),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
+                    Expanded(
+                      flex: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          DateFormat('dd-MM-yyyy').format(date),
+                          style: TextStyle(
+                            fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                            fontWeight: FontWeight.w300,
+                            color: ColorResources.COLOR_PRIMARY,
                           ),
-                        ],
+                          textAlign: TextAlign.right,
+                        ),
                       ),
-                      child: IconButton(
-                          onPressed: () {
-                            _selectDate(context);
-                          },
-                          icon: Icon(Icons.calendar_month))),
-                )
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(50),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: IconButton(
+                              onPressed: () {
+                                _selectDate(context);
+                              },
+                              icon: Icon(Icons.calendar_month))),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Container(
+                        child: CardSpendingDaily(
+                          spendings: _spendings,
+                        ),
+                      ),
+                SizedBox(
+                  height: 20,
+                ),
+                Button(
+                  ButtonType: 'primary',
+                  ButtonText: Strings.spendingAdd,
+                  Size: 'md',
+                  onPressed: () {
+                    print("tset");
+                  },
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Button(
+                  ButtonType: 'secondary',
+                  ButtonText: Strings.spendingHistory,
+                  Size: 'md',
+                  onPressed: () {
+                    PersistentNavBarNavigator.pushNewScreen(
+                      context,
+                      screen: SpendingHistoryScreen(),
+                      withNavBar: false,
+                      pageTransitionAnimation:
+                          PageTransitionAnimation.cupertino,
+                    );
+                  },
+                ),
               ],
             ),
-            SizedBox(
-              height: 20,
-            ),
-            isLoading
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Container(
-                    child: CardSpendingDaily(
-                      spendings: _spendings,
-                    ),
-                  ),
-            SizedBox(
-              height: 20,
-            ),
-            Button(
-              ButtonType: 'primary',
-              ButtonText: Strings.spendingAdd,
-              Size: 'md',
-              onPressed: () {
-                print("tset");
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Button(
-              ButtonType: 'secondary',
-              ButtonText: Strings.spendingHistory,
-              Size: 'md',
-              onPressed: () {
-                PersistentNavBarNavigator.pushNewScreen(
-                  context,
-                  screen: SpendingHistoryScreen(),
-                  withNavBar: false,
-                  pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                );
-              },
-            ),
-          ],
+          )),
         ),
-      )),
+      ),
     );
   }
 
@@ -164,9 +174,9 @@ class _SpendingScreenState extends State<SpendingScreen> {
       _spendings = [];
     });
     spendingProvider = Provider.of<SpendingProvider>(context, listen: false);
-    var spendingTemp = await spendingProvider.spendingByDate(date);
+    spendingProvider.fetchSpendingsByDate(date);
     setState(() {
-      _spendings = spendingTemp;
+      _spendings = spendingProvider.spendingsByDate;
       isLoading = false;
     });
   }
