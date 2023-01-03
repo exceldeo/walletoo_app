@@ -199,6 +199,51 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                         ),
                       ),
                     ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          width: double.infinity,
+                          child: Text(
+                            Strings.spendingAddFormCategory,
+                            textAlign: TextAlign.left,
+                            style: CustomTypography.jakartaSans(),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Container(
+                          width: double.infinity,
+                          // selected wallet
+                          child: DropdownButtonFormField(
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 0),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            value: _selectedWalletName == ""
+                                ? null
+                                : _selectedWalletName,
+                            items: _walletList.map((Wallet wallet) {
+                              return DropdownMenuItem(
+                                value: wallet,
+                                child: Text(wallet.name),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              mapTextController["wallet"]!.text =
+                                  value.toString();
+                              setState(() {});
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
                   )
                 ],
               ),
