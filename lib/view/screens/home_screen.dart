@@ -81,20 +81,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           )),
                       Container(
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: ColorResources.COLOR_PRIMARY,
                             borderRadius: BorderRadius.circular(50),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 5,
-                                blurRadius: 7,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
-                              ),
-                            ],
                           ),
                           child: IconButton(
-                              onPressed: () {}, icon: Icon(Icons.add)))
+                              onPressed: () {},
+                              icon: Icon(Icons.add,
+                                  size: 30, color: ColorResources.COLOR_WHITE)))
                     ],
                   ),
                   SizedBox(

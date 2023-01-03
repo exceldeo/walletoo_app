@@ -29,6 +29,12 @@ class Strings {
   static const String spendingListByCategory = "List Spending By Category";
   static const String spendingListByWallet = "List Spending By Wallet";
   static const String spendingList = "List Spending";
+  static const String spendingAddForm = "Form Add Spending";
+  static const String spendingAddFormDate = "Date";
+  static const String spendingAddFormWallet = "Wallet";
+  static const String spendingAddFormCategory = "Category";
+  static const String spendingAddFormTitle = "Title";
+  static const String spendingAddFormTotal = "Total";
 
   static const String categoryName = "Category Name";
   static const String categoryNameHint = "Enter Category Name";
@@ -40,4 +46,7 @@ class Strings {
 
   static const String topUp = "Top Up";
   static const String total = "Total";
+
+  static const String PLEASE_PROVIDE_A_VALID_EMAIL =
+      'Please Provide a Valid Email';
 }

@@ -52,36 +52,32 @@ class _SpendingHistoryScreenState extends State<SpendingHistoryScreen> {
             child: Column(
               children: [
                 CustomAppBar(title: Strings.spendingHistory),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'From: ${DateFormat('dd/MM/yyyy').format(_dateRange.start)}',
-                      style: CustomTypography.jakartaSans(),
-                    ),
-                    Text(
-                        'To: ${DateFormat('dd/MM/yyyy').format(_dateRange.end)}',
-                        style: CustomTypography.jakartaSans()),
-                    Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(50),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        child: IconButton(
-                            onPressed: () {
-                              _selectDateRange(context);
-                            },
-                            icon: Icon(Icons.calendar_month))),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'From: ${DateFormat('dd/MM/yyyy').format(_dateRange.start)}',
+                        style: CustomTypography.jakartaSans(),
+                      ),
+                      Text(
+                          'To: ${DateFormat('dd/MM/yyyy').format(_dateRange.end)}',
+                          style: CustomTypography.jakartaSans()),
+                      Container(
+                          decoration: BoxDecoration(
+                            color: ColorResources.COLOR_PRIMARY,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: IconButton(
+                              onPressed: () {
+                                _selectDateRange(context);
+                              },
+                              icon: Icon(Icons.calendar_month,
+                                  size: 25,
+                                  color: ColorResources.COLOR_WHITE))),
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 10,
@@ -112,11 +108,24 @@ class _SpendingHistoryScreenState extends State<SpendingHistoryScreen> {
   // function date picker range
   void _selectDateRange(BuildContext context) async {
     final DateTimeRange? picked = await showDateRangePicker(
-      context: context,
-      firstDate: DateTime(2015, 8),
-      lastDate: DateTime(2101),
-      initialDateRange: _dateRange,
-    );
+        context: context,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101),
+        initialDateRange: _dateRange,
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              colorScheme: ColorScheme.highContrastLight(
+                primary: ColorResources.COLOR_PRIMARY,
+                onPrimary: ColorResources.COLOR_WHITE,
+                surface: ColorResources.COLOR_PRIMARY,
+                onSurface: ColorResources.COLOR_PRIMARY,
+              ),
+              dialogBackgroundColor: ColorResources.COLOR_WHITE,
+            ),
+            child: child!,
+          );
+        });
     if (picked != null && picked != _dateRange)
       setState(() {
         _dateRange = picked;

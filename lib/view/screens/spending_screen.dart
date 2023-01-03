@@ -8,6 +8,7 @@ import 'package:walletoo_app/utils/color_resources.dart';
 import 'package:walletoo_app/utils/dimensions.dart';
 import 'package:walletoo_app/utils/router_name.dart';
 import 'package:walletoo_app/utils/string_resourses.dart';
+import 'package:walletoo_app/view/screens/spending/add_spending_screen.dart';
 import 'package:walletoo_app/view/screens/spending/history_screen.dart';
 import 'package:walletoo_app/view/widgets/button.dart';
 import 'package:walletoo_app/view/widgets/spendingPage/card_spending.dart';
@@ -80,23 +81,16 @@ class _SpendingScreenState extends State<SpendingScreen> {
                       flex: 1,
                       child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: ColorResources.COLOR_PRIMARY,
                             borderRadius: BorderRadius.circular(50),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 5,
-                                blurRadius: 7,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
-                              ),
-                            ],
                           ),
                           child: IconButton(
                               onPressed: () {
                                 _selectDate(context);
                               },
-                              icon: Icon(Icons.calendar_month))),
+                              icon: Icon(Icons.calendar_month,
+                                  size: 25,
+                                  color: ColorResources.COLOR_WHITE))),
                     )
                   ],
                 ),
@@ -120,7 +114,13 @@ class _SpendingScreenState extends State<SpendingScreen> {
                   ButtonText: Strings.spendingAdd,
                   Size: 'md',
                   onPressed: () {
-                    print("tset");
+                    PersistentNavBarNavigator.pushNewScreen(
+                      context,
+                      screen: AddSpendingScreen(),
+                      withNavBar: false,
+                      pageTransitionAnimation:
+                          PageTransitionAnimation.cupertino,
+                    );
                   },
                 ),
                 SizedBox(
@@ -153,7 +153,22 @@ class _SpendingScreenState extends State<SpendingScreen> {
         context: context,
         initialDate: date,
         firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
+        lastDate: DateTime(2101),
+        // theme of date picker
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              colorScheme: ColorScheme.highContrastLight(
+                primary: ColorResources.COLOR_PRIMARY,
+                onPrimary: ColorResources.COLOR_WHITE,
+                surface: ColorResources.COLOR_PRIMARY,
+                onSurface: ColorResources.COLOR_PRIMARY,
+              ),
+              dialogBackgroundColor: ColorResources.COLOR_WHITE,
+            ),
+            child: child!,
+          );
+        });
     if (picked != null && picked != date) {
       setState(() {
         date = picked;

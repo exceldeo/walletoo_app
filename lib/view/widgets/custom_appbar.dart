@@ -19,22 +19,15 @@ class CustomAppBar extends StatelessWidget {
             height: 35,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: ColorResources.COLOR_WHITE.withOpacity(.6),
+              color: ColorResources.COLOR_PRIMARY,
               borderRadius: BorderRadius.circular(50),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
             ),
-            child: Center(
+            child: Container(
+              padding: EdgeInsets.only(left: 3),
               child: IconButton(
                 icon: const Icon(
                   Icons.arrow_back_ios,
-                  color: ColorResources.COLOR_PRIMARY,
+                  color: ColorResources.COLOR_WHITE,
                   size: 20,
                 ),
                 onPressed: () {
@@ -48,7 +41,8 @@ class CustomAppBar extends StatelessWidget {
             child: Text(
               title,
               style: CustomTypography.jakartaSans(
-                  size: Dimensions.FONT_SIZE_EXTRA_LARGE),
+                  size: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                  weight: FontWeight.w500),
             ),
           )
         ],
