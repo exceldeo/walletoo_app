@@ -8,4 +8,12 @@ class CategoryRepo {
   ];
 
   List<CategorySpendingModel> get categories => _categories;
+
+  void addCategory(CategorySpendingModel category) {
+    _categories.add(category);
+  }
+
+  CategorySpendingModel getCategoryById(int id) {
+    return _categories.firstWhere((element) => element.id == id);
+  }
 }

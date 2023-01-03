@@ -18,6 +18,7 @@ Future<void> init() async {
 
   // Provider
   sl.registerFactory(() => WalletProvider(walletRepo: sl()));
-  sl.registerFactory(() => SpendingProvider(spendingRepo: sl()));
+  sl.registerFactory(
+      () => SpendingProvider(spendingRepo: sl(), categoryRepo: sl()));
   sl.registerFactory(() => CategoryProvider(categoriesRepo: sl()));
 }

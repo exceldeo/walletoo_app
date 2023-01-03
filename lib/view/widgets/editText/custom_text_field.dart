@@ -20,6 +20,8 @@ class CustomTextField extends StatelessWidget {
   final TextInputAction textInputAction;
   final bool isPhoneNumber;
   final bool isEmail;
+  // function on change
+  final Function(String)? onChanged;
 
   const CustomTextField(
       {super.key,
@@ -29,7 +31,8 @@ class CustomTextField extends StatelessWidget {
       this.maxLine = 1,
       this.textInputAction = TextInputAction.next,
       this.isEmail = false,
-      this.isPhoneNumber = false});
+      this.isPhoneNumber = false,
+      this.onChanged});
 
   @override
   Widget build(context) {
@@ -63,6 +66,7 @@ class CustomTextField extends StatelessWidget {
               border: InputBorder.none,
               enabledBorder: InputBorder.none,
             ),
+            onChanged: onChanged,
           ),
           Positioned(
             bottom: 5,

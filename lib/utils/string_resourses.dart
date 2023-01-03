@@ -35,6 +35,11 @@ class Strings {
   static const String spendingAddFormCategory = "Category";
   static const String spendingAddFormTitle = "Title";
   static const String spendingAddFormTotal = "Total";
+  static const String spendingAddFormTitleEmpty = "Title cannot be empty";
+  static const String spendingAddFormTotalEmpty = "Total cannot be empty";
+  static const String spendingAddFormDateEmpty = "Date cannot be empty";
+  static const String spendingAddFormWalletEmpty = "Wallet cannot be empty";
+  static const String spendingAddFormCategoryEmpty = "Category cannot be empty";
 
   static const String categoryName = "Category Name";
   static const String categoryNameHint = "Enter Category Name";
@@ -46,6 +51,8 @@ class Strings {
 
   static const String topUp = "Top Up";
   static const String total = "Total";
+  static const String save = "Save";
+  static const String clear = "Clear";
 
   static const String PLEASE_PROVIDE_A_VALID_EMAIL =
       'Please Provide a Valid Email';

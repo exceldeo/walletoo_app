@@ -15,4 +15,10 @@ class CategoryProvider extends ChangeNotifier {
     _categories = categoriesRepo.categories;
     notifyListeners();
   }
+
+  Future<void> addCategory(CategorySpendingModel category) async {
+    categoriesRepo.addCategory(category);
+    _categories = categoriesRepo.categories;
+    notifyListeners();
+  }
 }

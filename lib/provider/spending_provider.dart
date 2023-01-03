@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:walletoo_app/data/models/spending.dart';
+import 'package:walletoo_app/data/repositories/category_repository.dart';
 import 'package:walletoo_app/data/repositories/spending_repository.dart';
 
 class SpendingProvider extends ChangeNotifier {
   final SpendingRepo spendingRepo;
-  SpendingProvider({required this.spendingRepo});
+  final CategoryRepo categoryRepo;
+  SpendingProvider({required this.spendingRepo, required this.categoryRepo});
 
   List<SpendingModel> _spendings = [];
   List<SpendingModel> get spendings => _spendings;
@@ -21,15 +23,15 @@ class SpendingProvider extends ChangeNotifier {
   List<Map<String, dynamic>> get spendingByCategory =>
       _spendings.fold(<Map<String, dynamic>>[],
           (List<Map<String, dynamic>> list, SpendingModel spending) {
-        if (list.any((element) => element['id'] == spending.category.id)) {
-          list.firstWhere((element) => element['id'] == spending.category.id)[
+        if (list.any((element) => element['id'] == spending.categoryId)) {
+          list.firstWhere((element) => element['id'] == spending.categoryId)[
               'balance'] = (list.firstWhere((element) =>
-                  element['id'] == spending.category.id)['balance']! +
+                  element['id'] == spending.categoryId)['balance']! +
               spending.balance.toInt());
         } else {
           list.add({
-            'id': spending.category.id,
-            'name': spending.category.name,
+            'id': spending.categoryId,
+            'name': categoryRepo.getCategoryById(spending.categoryId).name,
             'balance': spending.balance.toInt()
           });
         }
