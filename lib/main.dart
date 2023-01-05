@@ -7,6 +7,7 @@ import 'package:walletoo_app/provider/wallet_provider.dart';
 import 'package:walletoo_app/utils/router_name.dart';
 import 'package:walletoo_app/view/screens/spending/add_spending_screen.dart';
 import 'package:walletoo_app/view/screens/spending/history_screen.dart';
+import 'package:walletoo_app/view/screens/spending_screen.dart';
 import 'package:walletoo_app/view/screens/splash/splash_screen.dart';
 import 'package:walletoo_app/view/screens/startup_screen.dart';
 import 'di_container.dart' as di;
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
         MyRoute.splash: (context) => SplashScreen(),
         MyRoute.spendingHistory: (context) => SpendingHistoryScreen(),
         MyRoute.addSpending: (context) => AddSpendingScreen(),
+        MyRoute.spending: (context) => SpendingScreen(),
       },
     );
   }

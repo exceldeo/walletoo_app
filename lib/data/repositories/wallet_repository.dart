@@ -8,4 +8,18 @@ class WalletRepo {
   ];
 
   List<Wallet> get wallets => _wallets;
+
+  void addWallet({required String walletName, double balance = 0}) {
+    Wallet wallet =
+        Wallet(id: _wallets.length + 1, name: walletName, balance: balance);
+    _wallets.add(wallet);
+  }
+
+  Wallet getWalletById(int id) {
+    return _wallets.firstWhere((element) => element.id == id);
+  }
+
+  void topUp({required int walletId, required double amount}) {
+    _wallets.firstWhere((wallet) => wallet.id == walletId).balance += amount;
+  }
 }

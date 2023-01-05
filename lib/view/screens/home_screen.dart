@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:walletoo_app/data/models/wallet.dart';
 import 'package:walletoo_app/provider/spending_provider.dart';
@@ -6,6 +7,7 @@ import 'package:walletoo_app/provider/wallet_provider.dart';
 import 'package:walletoo_app/utils/color_resources.dart';
 import 'package:walletoo_app/utils/dimensions.dart';
 import 'package:walletoo_app/utils/string_resourses.dart';
+import 'package:walletoo_app/view/screens/spending/add_spending_screen.dart';
 import 'package:walletoo_app/view/widgets/card_spending.dart';
 import 'package:walletoo_app/view/widgets/card_wallet_balance.dart';
 
@@ -85,7 +87,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             borderRadius: BorderRadius.circular(50),
                           ),
                           child: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen: AddSpendingScreen(),
+                                  withNavBar: false,
+                                  pageTransitionAnimation:
+                                      PageTransitionAnimation.cupertino,
+                                );
+                              },
                               icon: Icon(Icons.add,
                                   size: 30, color: ColorResources.COLOR_WHITE)))
                     ],

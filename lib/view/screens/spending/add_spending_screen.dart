@@ -9,6 +9,7 @@ import 'package:walletoo_app/provider/spending_provider.dart';
 import 'package:walletoo_app/provider/wallet_provider.dart';
 import 'package:walletoo_app/utils/color_resources.dart';
 import 'package:walletoo_app/utils/currency_format.dart';
+import 'package:walletoo_app/utils/router_name.dart';
 import 'package:walletoo_app/utils/string_resourses.dart';
 import 'package:walletoo_app/utils/text_style.dart';
 import 'package:walletoo_app/view/widgets/button.dart';
@@ -198,9 +199,6 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
                               ),
                               value: _selectedWalletName == ""
                                   ? null
@@ -246,9 +244,6 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
                               ),
                               value: _selectedCategoryName == ""
                                   ? null

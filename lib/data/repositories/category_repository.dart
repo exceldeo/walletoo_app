@@ -9,7 +9,9 @@ class CategoryRepo {
 
   List<CategorySpendingModel> get categories => _categories;
 
-  void addCategory(CategorySpendingModel category) {
+  void addCategory({required String categoryName}) {
+    CategorySpendingModel category =
+        CategorySpendingModel(id: _categories.length + 1, name: categoryName);
     _categories.add(category);
   }
 

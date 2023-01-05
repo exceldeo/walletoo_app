@@ -16,8 +16,8 @@ class WalletProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addWallet(Wallet wallet) {
-    wallets.add(wallet);
+  void addWallet({String walletName = 'Wallet', double balance = 0}) {
+    walletRepo.addWallet(walletName: walletName);
     notifyListeners();
   }
 
@@ -31,8 +31,8 @@ class WalletProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void topUp(int idWallet, double amount) {
-    wallets.firstWhere((wallet) => wallet.id == idWallet).balance += amount;
+  void topUpWallet({required int walletId, required double amount}) {
+    walletRepo.topUp(walletId: walletId, amount: amount);
     notifyListeners();
   }
 }

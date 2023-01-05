@@ -16,9 +16,8 @@ class CategoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addCategory(CategorySpendingModel category) async {
-    categoriesRepo.addCategory(category);
-    _categories = categoriesRepo.categories;
+  Future<void> addCategory({required String categoryName}) async {
+    categoriesRepo.addCategory(categoryName: categoryName);
     notifyListeners();
   }
 }

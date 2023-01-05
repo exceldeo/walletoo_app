@@ -7,4 +7,5 @@ class MyRoute {
   static const String addCategory = '/addCategory';
   static const String topUp = '/topUp';
   static const String spendingHistory = '/spendingHistory';
+  static const String spending = '/spending';
 }
