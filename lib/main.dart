@@ -1,31 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:walletoo_app/data/repositories/wallet_repository.dart';
-import 'package:walletoo_app/provider/category_provider.dart';
-import 'package:walletoo_app/provider/spending_provider.dart';
-import 'package:walletoo_app/provider/wallet_provider.dart';
+import 'package:walletoo_app/provider/database_provider.dart';
 import 'package:walletoo_app/utils/router_name.dart';
 import 'package:walletoo_app/view/screens/spending/add_spending_screen.dart';
 import 'package:walletoo_app/view/screens/spending/history_screen.dart';
 import 'package:walletoo_app/view/screens/spending_screen.dart';
 import 'package:walletoo_app/view/screens/splash/splash_screen.dart';
 import 'package:walletoo_app/view/screens/startup_screen.dart';
-import 'di_container.dart' as di;
 
 Future<void> main() async {
-  await di.init();
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => di.sl<WalletProvider>(),
-        ),
-        ChangeNotifierProvider(create: (context) => di.sl<SpendingProvider>()),
-        ChangeNotifierProvider(create: (context) => di.sl<CategoryProvider>()),
-      ],
-      child: MyApp(),
-    ),
-  );
+  runApp(ChangeNotifierProvider(
+    create: (_) => DatabaseProvider(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

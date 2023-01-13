@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
+import 'package:walletoo_app/data/models/category_spending.dart';
 import 'package:walletoo_app/data/models/wallet.dart';
-import 'package:walletoo_app/provider/spending_provider.dart';
-import 'package:walletoo_app/provider/wallet_provider.dart';
+import 'package:walletoo_app/provider/database_provider.dart';
 import 'package:walletoo_app/utils/color_resources.dart';
 import 'package:walletoo_app/utils/dimensions.dart';
 import 'package:walletoo_app/utils/string_resourses.dart';
@@ -19,12 +19,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late WalletProvider walletProvider;
-  late SpendingProvider spendingProvider;
-  double balance = 0;
-  double balanceSpending = 0;
-  List<Wallet> _wallets = [];
-  List<Map<String, dynamic>> _spendings = [];
+  late DatabaseProvider databaseProvider;
+  int balance = 0;
+  int totalSpending = 0;
+  List<WalletModel> _wallets = [];
+  List<CategoryTotalSpendingModel> _categoryTotalSpendings = [];
 
   @override
   void initState() {
@@ -105,7 +104,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Container(
                       child: CardSpending(
-                          balance: balanceSpending, spendings: _spendings))
+                          balance: totalSpending,
+                          spendings: _categoryTotalSpendings))
                 ],
               ),
             ),
@@ -118,21 +118,23 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _fetchWallets() async {
     balance = 0;
     _wallets = [];
-    walletProvider = Provider.of<WalletProvider>(context, listen: false);
-    await walletProvider.fechWallets();
+    databaseProvider = Provider.of<DatabaseProvider>(context, listen: false);
+    await databaseProvider.getWallets();
+    await databaseProvider.getBalance();
     setState(() {
-      balance = walletProvider.balance;
-      _wallets = walletProvider.wallets;
+      balance = databaseProvider.balance;
+      _wallets = databaseProvider.wallets;
     });
   }
 
   Future<void> _fetchSpendings() async {
-    _spendings = [];
-    spendingProvider = Provider.of<SpendingProvider>(context, listen: false);
-    await spendingProvider.fetchSpendings();
+    _categoryTotalSpendings = [];
+    databaseProvider = Provider.of<DatabaseProvider>(context, listen: false);
+    await databaseProvider.getCategoryTotalSpending();
+    await databaseProvider.getTotalSpending();
     setState(() {
-      balanceSpending = spendingProvider.balance;
-      _spendings = spendingProvider.spendingByCategory;
+      totalSpending = databaseProvider.totalSpending;
+      _categoryTotalSpendings = databaseProvider.categoryTotalSpendings;
     });
   }
 }

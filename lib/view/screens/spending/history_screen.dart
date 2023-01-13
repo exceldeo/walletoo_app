@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:walletoo_app/data/models/category_spending.dart';
 import 'package:walletoo_app/data/models/spending.dart';
-import 'package:walletoo_app/provider/spending_provider.dart';
+import 'package:walletoo_app/provider/database_provider.dart';
 import 'package:walletoo_app/utils/color_resources.dart';
 import 'package:walletoo_app/utils/string_resourses.dart';
 import 'package:walletoo_app/utils/text_style.dart';
@@ -19,7 +19,7 @@ class SpendingHistoryScreen extends StatefulWidget {
 }
 
 class _SpendingHistoryScreenState extends State<SpendingHistoryScreen> {
-  late SpendingProvider spendingProvider;
+  late DatabaseProvider databaseProvider;
   late DateTimeRange _dateRange;
   List<List<SpendingModel>> _spendingListByDateRange = [];
 
@@ -89,7 +89,9 @@ class _SpendingHistoryScreenState extends State<SpendingHistoryScreen> {
                     itemCount: _spendingListByDateRange.length,
                     itemBuilder: (context, index) {
                       return CardSpendingHistory(
-                          date: _spendingListByDateRange[index][0].date,
+                          date: _spendingListByDateRange[index][0]
+                              .date
+                              .toString(),
                           spendingList: _spendingListByDateRange[index]);
                     },
                   ),
@@ -135,10 +137,26 @@ class _SpendingHistoryScreenState extends State<SpendingHistoryScreen> {
 
   Future<void> _getSpendingListByDateRange() async {
     _spendingListByDateRange = [];
-    spendingProvider = Provider.of<SpendingProvider>(context, listen: false);
-    spendingProvider.fetchSpendingsByDateRange(_dateRange);
-    setState(() {
-      _spendingListByDateRange = spendingProvider.spendingsByDateRange;
-    });
+    List<SpendingModel> _spendingList = [];
+    databaseProvider = Provider.of<DatabaseProvider>(context, listen: false);
+    databaseProvider.getSpendingsByDateRange(
+        _dateRange.start.toString(), _dateRange.end.toString());
+    _spendingList = databaseProvider.spendingsByDateRange;
+
+    // group spending by date
+    for (int i = 0; i < _spendingList.length; i++) {
+      List<SpendingModel> _spendingListByDate = [];
+      _spendingListByDate.add(_spendingList[i]);
+      for (int j = i + 1; j < _spendingList.length; j++) {
+        if (_spendingList[i].date == _spendingList[j].date) {
+          _spendingListByDate.add(_spendingList[j]);
+          _spendingList.removeAt(j);
+          j--;
+        }
+      }
+      _spendingListByDateRange.add(_spendingListByDate);
+    }
+
+    setState(() {});
   }
 }

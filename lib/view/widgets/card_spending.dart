@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:walletoo_app/data/models/category_spending.dart';
 import 'package:walletoo_app/data/models/wallet.dart';
 import 'package:walletoo_app/utils/color_resources.dart';
 import 'package:walletoo_app/utils/currency_format.dart';
@@ -7,8 +8,8 @@ import 'package:walletoo_app/utils/string_resourses.dart';
 import 'package:walletoo_app/utils/text_style.dart';
 
 class CardSpending extends StatelessWidget {
-  final double balance;
-  final List<Map<String, dynamic>> spendings;
+  final int balance;
+  final List<CategoryTotalSpendingModel> spendings;
 
   const CardSpending({
     Key? key,
@@ -35,48 +36,48 @@ class CardSpending extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: double.infinity,
-            child: Row(
-              children: [
-                Text(
-                  "From",
-                  style: CustomTypography.jakartaSans(),
-                ),
-                Spacer(),
-                Text("27 Jan 2021",
-                    style: TextStyle(
-                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                      color: ColorResources.COLOR_GREY,
-                    )),
-                IconButton(onPressed: () {}, icon: Icon(Icons.calendar_today))
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            width: double.infinity,
-            child: Row(
-              children: [
-                Text(
-                  "To",
-                  style: CustomTypography.jakartaSans(),
-                ),
-                Spacer(),
-                Text("27 Jan 2021",
-                    style: TextStyle(
-                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                      color: ColorResources.COLOR_GREY,
-                    )),
-                IconButton(onPressed: () {}, icon: Icon(Icons.calendar_today))
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
+          // Container(
+          //   width: double.infinity,
+          //   child: Row(
+          //     children: [
+          //       Text(
+          //         "From",
+          //         style: CustomTypography.jakartaSans(),
+          //       ),
+          //       Spacer(),
+          //       Text("27 Jan 2021",
+          //           style: TextStyle(
+          //             fontSize: Dimensions.FONT_SIZE_DEFAULT,
+          //             color: ColorResources.COLOR_GREY,
+          //           )),
+          //       IconButton(onPressed: () {}, icon: Icon(Icons.calendar_today))
+          //     ],
+          //   ),
+          // ),
+          // SizedBox(
+          //   height: 5,
+          // ),
+          // Container(
+          //   width: double.infinity,
+          //   child: Row(
+          //     children: [
+          //       Text(
+          //         "To",
+          //         style: CustomTypography.jakartaSans(),
+          //       ),
+          //       Spacer(),
+          //       Text("27 Jan 2021",
+          //           style: TextStyle(
+          //             fontSize: Dimensions.FONT_SIZE_DEFAULT,
+          //             color: ColorResources.COLOR_GREY,
+          //           )),
+          //       IconButton(onPressed: () {}, icon: Icon(Icons.calendar_today))
+          //     ],
+          //   ),
+          // ),
+          // SizedBox(
+          //   height: 15,
+          // ),
           Container(
             width: double.infinity,
             child: Text(
@@ -121,7 +122,7 @@ class CardSpending extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  e['name'],
+                                  e.categoryName,
                                   style: TextStyle(
                                     fontSize: Dimensions.FONT_SIZE_SMALL,
                                     color: ColorResources.COLOR_PRIMARY,
@@ -129,7 +130,8 @@ class CardSpending extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  CurrencyFormat.convertToIdr(e['balance'], 0),
+                                  CurrencyFormat.convertToIdr(
+                                      e.totalSpending, 0),
                                   style: TextStyle(
                                     fontSize: Dimensions.FONT_SIZE_SMALL,
                                     color: ColorResources.COLOR_GREY,

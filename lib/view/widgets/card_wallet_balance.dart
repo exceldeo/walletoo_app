@@ -7,8 +7,8 @@ import 'package:walletoo_app/utils/string_resourses.dart';
 import 'package:walletoo_app/utils/text_style.dart';
 
 class CardWalletBalance extends StatelessWidget {
-  final double balance;
-  final List<Wallet> wallets;
+  final int balance;
+  final List<WalletModel> wallets;
 
   const CardWalletBalance({
     Key? key,

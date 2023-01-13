@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:walletoo_app/data/models/category_spending.dart';
 import 'package:walletoo_app/data/models/wallet.dart';
-import 'package:walletoo_app/provider/category_provider.dart';
-import 'package:walletoo_app/provider/wallet_provider.dart';
+import 'package:walletoo_app/provider/database_provider.dart';
 import 'package:walletoo_app/utils/color_resources.dart';
 import 'package:walletoo_app/utils/currency_format.dart';
 import 'package:walletoo_app/utils/dimensions.dart';
@@ -36,11 +35,10 @@ class _WalletScreenState extends State<WalletScreen> {
     "categoryName": TextEditingController(),
   };
 
-  late WalletProvider walletProvider;
-  double balance = 0;
-  List<Wallet> _wallets = [];
+  late DatabaseProvider databaseProvider;
+  int balance = 0;
+  List<WalletModel> _wallets = [];
 
-  late CategoryProvider categoryProvider;
   List<CategorySpendingModel> _categories = [];
 
   @override
@@ -94,7 +92,9 @@ class _WalletScreenState extends State<WalletScreen> {
                           ButtonText: Strings.walletAdd,
                           Size: 'md',
                           onPressed: () {
-                            _DialogAddWallet(context);
+                            _DialogAddWallet(context).then((value) => {
+                                  _fetchWallets(),
+                                });
                           }),
                       SizedBox(
                         height: 10,
@@ -132,7 +132,9 @@ class _WalletScreenState extends State<WalletScreen> {
                           ButtonType: 'primary',
                           Size: 'md',
                           onPressed: () {
-                            _DialogAddCategory(context);
+                            _DialogAddCategory(context).then((value) => {
+                                  _fetchCategories(),
+                                });
                           }),
                       SizedBox(
                         height: 20,
@@ -149,20 +151,21 @@ class _WalletScreenState extends State<WalletScreen> {
   Future<void> _fetchWallets() async {
     balance = 0;
     _wallets = [];
-    walletProvider = Provider.of<WalletProvider>(context, listen: false);
-    await walletProvider.fechWallets();
+    databaseProvider = Provider.of<DatabaseProvider>(context, listen: false);
+    await databaseProvider.getWallets();
+    await databaseProvider.getBalance();
     setState(() {
-      balance = walletProvider.balance;
-      _wallets = walletProvider.wallets;
+      balance = databaseProvider.balance;
+      _wallets = databaseProvider.wallets;
     });
   }
 
   Future<void> _fetchCategories() async {
     _categories = [];
-    categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
-    await categoryProvider.fetchCategories();
+    databaseProvider = Provider.of<DatabaseProvider>(context, listen: false);
+    await databaseProvider.getCategories();
     setState(() {
-      _categories = categoryProvider.categories;
+      _categories = databaseProvider.categories;
     });
   }
 
@@ -182,9 +185,10 @@ class _WalletScreenState extends State<WalletScreen> {
                     ButtonText: Strings.walletAdd,
                     Size: 'md',
                     onPressed: () {
-                      walletProvider.addWallet(
-                          walletName:
-                              mapTextControllerWallet["walletName"]!.text);
+                      databaseProvider.addWallet(WalletModel(
+                          id: null,
+                          balance: 0,
+                          name: mapTextControllerWallet["walletName"]!.text));
                       mapTextControllerWallet["walletName"]!.clear();
                       Navigator.of(context).pop();
                     }),
@@ -214,7 +218,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       value: _selectedWalletName == ""
                           ? null
                           : _selectedWalletName,
-                      items: _wallets.map((Wallet wallet) {
+                      items: _wallets.map((WalletModel wallet) {
                         return DropdownMenuItem(
                           value: wallet.id,
                           child: Text(wallet.name),
@@ -234,7 +238,6 @@ class _WalletScreenState extends State<WalletScreen> {
                       textInputType: TextInputType.number,
                       hintTxt: "Amount",
                       onChanged: (value) {
-                        // print(mapTextControllerTopUp["amount"]!.text);
                         setState(() {});
                       },
                     ),
@@ -261,14 +264,14 @@ class _WalletScreenState extends State<WalletScreen> {
                           content: Text(Strings.spendingAddFormTotalEmpty),
                         ));
                       } else {
-                        print(mapTextControllerTopUp["walletId"]!.text +
-                            " " +
-                            mapTextControllerTopUp["amount"]!.text);
-                        walletProvider.topUpWallet(
-                            walletId: int.parse(
-                                mapTextControllerTopUp["walletId"]!.text),
-                            amount: double.parse(
-                                mapTextControllerTopUp["amount"]!.text));
+                        // print(mapTextControllerTopUp["walletId"]!.text +
+                        //     " " +
+                        //     mapTextControllerTopUp["amount"]!.text);
+                        // databaseProvider.topUpWallet(
+                        //     walletId: int.parse(
+                        //         mapTextControllerTopUp["walletId"]!.text),
+                        //     amount: int.parse(
+                        //         mapTextControllerTopUp["amount"]!.text));
                         mapTextControllerTopUp["walletId"]!.clear();
                         mapTextControllerTopUp["amount"]!.clear();
                         _fetchWallets();
@@ -295,9 +298,10 @@ class _WalletScreenState extends State<WalletScreen> {
                     ButtonText: Strings.categoryAdd,
                     Size: 'md',
                     onPressed: () {
-                      categoryProvider.addCategory(
-                          categoryName:
-                              mapTextControllerCategory["categoryName"]!.text);
+                      databaseProvider.addCategory(CategorySpendingModel(
+                          id: null,
+                          name:
+                              mapTextControllerCategory["categoryName"]!.text));
                       mapTextControllerCategory["categoryName"]!.clear();
                       Navigator.of(context).pop();
                     }),

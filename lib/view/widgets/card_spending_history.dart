@@ -8,7 +8,7 @@ import 'package:walletoo_app/utils/string_resourses.dart';
 import 'package:walletoo_app/utils/text_style.dart';
 
 class CardSpendingHistory extends StatelessWidget {
-  late DateTime date;
+  late String date;
   List<SpendingModel> spendingList;
 
   CardSpendingHistory(
@@ -38,7 +38,7 @@ class CardSpendingHistory extends StatelessWidget {
           Container(
             width: double.infinity,
             child: Text(
-              DateFormat('EEEE, dd MMMM yyyy').format(date),
+              DateFormat('EEEE, dd MMMM yyyy').format(DateTime.parse(date)),
               textAlign: TextAlign.left,
               style: CustomTypography.jakartaSans(
                   size: Dimensions.FONT_SIZE_LARGE),

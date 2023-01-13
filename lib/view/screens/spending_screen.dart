@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:walletoo_app/data/models/spending.dart';
-import 'package:walletoo_app/provider/spending_provider.dart';
+import 'package:walletoo_app/provider/database_provider.dart';
 import 'package:walletoo_app/utils/color_resources.dart';
 import 'package:walletoo_app/utils/dimensions.dart';
 import 'package:walletoo_app/utils/router_name.dart';
@@ -21,7 +21,7 @@ class SpendingScreen extends StatefulWidget {
 }
 
 class _SpendingScreenState extends State<SpendingScreen> {
-  late SpendingProvider spendingProvider;
+  late DatabaseProvider databaseProvider;
   late DateTime date = DateTime.now();
   List<SpendingModel> _spendings = [];
   late bool isLoading = true;
@@ -31,7 +31,6 @@ class _SpendingScreenState extends State<SpendingScreen> {
     // TODO: implement initState
     super.initState();
     Future.delayed(Duration.zero, () async {
-      _fetchSpendings();
       _fetchSpendingsByDate(date);
     });
   }
@@ -40,7 +39,6 @@ class _SpendingScreenState extends State<SpendingScreen> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        await _fetchSpendings();
         await _fetchSpendingsByDate(date);
       },
       child: Scaffold(
@@ -120,7 +118,7 @@ class _SpendingScreenState extends State<SpendingScreen> {
                       withNavBar: false,
                       pageTransitionAnimation:
                           PageTransitionAnimation.cupertino,
-                    );
+                    ).then((value) => _fetchSpendingsByDate(date));
                   },
                 ),
                 SizedBox(
@@ -177,21 +175,16 @@ class _SpendingScreenState extends State<SpendingScreen> {
     }
   }
 
-  // fetch spending
-  Future<void> _fetchSpendings() async {
-    spendingProvider = Provider.of<SpendingProvider>(context, listen: false);
-    await spendingProvider.fetchSpendings();
-  }
-
   Future<void> _fetchSpendingsByDate(DateTime date) async {
+    _spendings = [];
     setState(() {
       isLoading = true;
-      _spendings = [];
     });
-    spendingProvider = Provider.of<SpendingProvider>(context, listen: false);
-    spendingProvider.fetchSpendingsByDate(date);
+    databaseProvider = Provider.of<DatabaseProvider>(context, listen: false);
+    await databaseProvider
+        .getSpendingsByDate(DateFormat('yyyy-MM-dd').format(date));
     setState(() {
-      _spendings = spendingProvider.spendingsByDate;
+      _spendings = databaseProvider.spendingsByDate;
       isLoading = false;
     });
   }

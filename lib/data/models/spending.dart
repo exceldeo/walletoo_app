@@ -2,12 +2,12 @@ import 'package:walletoo_app/data/models/category_spending.dart';
 import 'package:walletoo_app/data/models/wallet.dart';
 
 class SpendingModel {
-  late int id;
+  late int? id = null;
   late String name;
-  late double balance;
+  late int balance;
   late int categoryId;
   late int walletId;
-  late DateTime date;
+  late String date;
 
   SpendingModel(
       {required this.id,
@@ -23,7 +23,7 @@ class SpendingModel {
     balance = json['balance'];
     categoryId = json['category_id'];
     walletId = json['wallet_id'];
-    date = DateTime.parse(json['date']);
+    date = json['date'];
   }
 
   Map<String, dynamic> toJson() {

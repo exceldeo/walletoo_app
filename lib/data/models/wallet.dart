@@ -1,11 +1,11 @@
-class Wallet {
-  late int id;
+class WalletModel {
+  late int? id = null;
   late String name;
-  late double balance;
+  late int balance;
 
-  Wallet({required this.id, required this.name, required this.balance});
+  WalletModel({required this.id, required this.name, required this.balance});
 
-  Wallet.fromJson(Map<String, dynamic> json) {
+  WalletModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     balance = json['balance'];

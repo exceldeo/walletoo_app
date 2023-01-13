@@ -4,9 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:walletoo_app/data/models/category_spending.dart';
 import 'package:walletoo_app/data/models/spending.dart';
 import 'package:walletoo_app/data/models/wallet.dart';
-import 'package:walletoo_app/provider/category_provider.dart';
-import 'package:walletoo_app/provider/spending_provider.dart';
-import 'package:walletoo_app/provider/wallet_provider.dart';
+import 'package:walletoo_app/provider/database_provider.dart';
 import 'package:walletoo_app/utils/color_resources.dart';
 import 'package:walletoo_app/utils/currency_format.dart';
 import 'package:walletoo_app/utils/router_name.dart';
@@ -32,13 +30,12 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
     "total": TextEditingController(),
   };
 
-  late SpendingProvider spendingProvider;
+  late DatabaseProvider databaseProvider;
+  late DateTime _selectedDate = DateTime.now();
 
-  late WalletProvider walletProvider;
-  late List<Wallet> _walletList = [];
+  late List<WalletModel> _walletList = [];
   late String _selectedWalletName = "";
 
-  late CategoryProvider categoryProvider;
   late List<CategorySpendingModel> _categoryList = [];
   late String _selectedCategoryName = "";
 
@@ -48,7 +45,7 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
     super.initState();
     mapTextController["date"]!.text =
         DateFormat("dd/MM/yyyy").format(DateTime.now());
-
+    _selectedDate = DateTime.now();
     // get wallet list
     Future.delayed(Duration.zero, () async {
       await _getWalletList();
@@ -161,6 +158,7 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                                             mapTextController["date"]!.text =
                                                 DateFormat("dd/MM/yyyy")
                                                     .format(value);
+                                            _selectedDate = value;
                                             setState(() {});
                                           }
                                         });
@@ -203,7 +201,7 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                               value: _selectedWalletName == ""
                                   ? null
                                   : _selectedWalletName,
-                              items: _walletList.map((Wallet wallet) {
+                              items: _walletList.map((WalletModel wallet) {
                                 return DropdownMenuItem(
                                   value: wallet.id,
                                   child: Text(wallet.name),
@@ -239,7 +237,7 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
                           flex: 4,
                           child: Container(
                             width: double.infinity,
-                            // selected wallet
+                            // selected category
                             child: DropdownButtonFormField(
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
@@ -397,32 +395,32 @@ class _AddSpendingScreenState extends State<AddSpendingScreen> {
 
   Future<void> _getWalletList() async {
     _walletList = [];
-    walletProvider = Provider.of<WalletProvider>(context, listen: false);
-    await walletProvider.fechWallets();
+    databaseProvider = Provider.of<DatabaseProvider>(context, listen: false);
+    await databaseProvider.getWallets();
     setState(() {
-      _walletList = walletProvider.wallets;
+      _walletList = databaseProvider.wallets;
     });
   }
 
   Future<void> _getCategoryList() async {
     _categoryList = [];
-    categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
-    await categoryProvider.fetchCategories();
+    databaseProvider = Provider.of<DatabaseProvider>(context, listen: false);
+    await databaseProvider.getCategories();
     setState(() {
-      _categoryList = categoryProvider.categories;
+      _categoryList = databaseProvider.categories;
     });
   }
 
   Future<void> _addSpending() async {
-    spendingProvider = Provider.of<SpendingProvider>(context, listen: false);
+    databaseProvider = Provider.of<DatabaseProvider>(context, listen: false);
     SpendingModel data = SpendingModel(
-        id: 0,
         name: mapTextController["title"]!.text,
-        balance: double.parse(mapTextController["total"]!.text),
-        categoryId: int.parse(mapTextController["wallet"]!.text),
-        walletId: int.parse(mapTextController["category"]!.text),
-        date: DateFormat("dd/MM/yyyy").parse(mapTextController["date"]!.text));
-    spendingProvider.addSpending(data);
+        balance: int.parse(mapTextController["total"]!.text),
+        categoryId: int.parse(mapTextController["category"]!.text),
+        walletId: int.parse(mapTextController["wallet"]!.text),
+        date: DateFormat('yyyy-MM-dd').format(_selectedDate),
+        id: null);
+    databaseProvider.addSpending(data);
     Navigator.pop(context);
   }
 }
