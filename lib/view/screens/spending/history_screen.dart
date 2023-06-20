@@ -34,7 +34,7 @@ class _SpendingHistoryScreenState extends State<SpendingHistoryScreen> {
 
     // get spending list by date range
     Future.delayed(Duration.zero, () async {
-      await _getSpendingListByDateRange();
+      _getSpendingListByDateRange();
     });
   }
 

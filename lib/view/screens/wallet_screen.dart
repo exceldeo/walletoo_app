@@ -241,11 +241,6 @@ class _WalletScreenState extends State<WalletScreen> {
                         setState(() {});
                       },
                     ),
-                    Text(CurrencyFormat.convertToIdr(
-                        int.parse(mapTextControllerTopUp["amount"]!.text == ""
-                            ? "0"
-                            : mapTextControllerTopUp["amount"]!.text),
-                        0)),
                   ],
                 ),
               ),
@@ -267,11 +262,11 @@ class _WalletScreenState extends State<WalletScreen> {
                         // print(mapTextControllerTopUp["walletId"]!.text +
                         //     " " +
                         //     mapTextControllerTopUp["amount"]!.text);
-                        // databaseProvider.topUpWallet(
-                        //     walletId: int.parse(
-                        //         mapTextControllerTopUp["walletId"]!.text),
-                        //     amount: int.parse(
-                        //         mapTextControllerTopUp["amount"]!.text));
+                        databaseProvider.topUpWallet(
+                            walletId: int.parse(
+                                mapTextControllerTopUp["walletId"]!.text),
+                            amount: int.parse(
+                                mapTextControllerTopUp["amount"]!.text));
                         mapTextControllerTopUp["walletId"]!.clear();
                         mapTextControllerTopUp["amount"]!.clear();
                         _fetchWallets();

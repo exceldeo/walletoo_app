@@ -257,6 +257,7 @@ class DatabaseProvider with ChangeNotifier {
       return await txn.rawQuery('''
         SELECT SUM(${tableSpending["columnBalance"]}) AS total FROM ${tableSpending["table"]}
       ''').then((data) {
+        if (data[0]["total"] == null) return 0;
         // 'data' is our fetched value
         // convert it from "Map<String, object>" to "Map<String, dynamic>"
         final converted = List<Map<String, dynamic>>.from(data);

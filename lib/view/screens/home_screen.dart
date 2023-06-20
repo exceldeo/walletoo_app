@@ -52,12 +52,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Container(
                     width: double.infinity,
-                    child: Text(Strings.wallet,
-                        style: TextStyle(
-                          fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
-                          fontWeight: FontWeight.w300,
-                          color: ColorResources.COLOR_PRIMARY,
-                        )),
+                    child: Row(
+                      children: [
+                        Text(Strings.wallet,
+                            style: TextStyle(
+                              fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
+                              fontWeight: FontWeight.w300,
+                              color: ColorResources.COLOR_PRIMARY,
+                            )),
+                        IconButton(
+                            onPressed: () {
+                              _fetchSpendings();
+                              _fetchWallets();
+                            },
+                            icon: Icon(Icons.refresh,
+                                size: 30, color: ColorResources.COLOR_PRIMARY)),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 20,
